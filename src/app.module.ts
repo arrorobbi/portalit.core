@@ -6,9 +6,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config'; // Import TypeORM config
 import { UsersModule } from './modules/user.module';
 import { DataSource } from 'typeorm';
+import { UploadController } from './misc/multer';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'public'), // path to the public folder
+    }),
     UsersModule,
     TypeOrmModule.forRoot(typeOrmConfig), // Use the imported config
     LoggerModule.forRoot({
@@ -26,7 +32,7 @@ import { DataSource } from 'typeorm';
       },
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, UploadController],
   providers: [AppService],
 })
 export class AppModule {
