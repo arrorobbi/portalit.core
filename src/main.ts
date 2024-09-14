@@ -10,6 +10,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true, // Enable buffer logs for performance
   });
+  // Enable CORS
+  app.enableCors();
 
   app.useGlobalPipes(new ValidationPipe()); // validation DTO and interface
   app.useGlobalFilters(new AllExceptionsFilter()); // error middleware
