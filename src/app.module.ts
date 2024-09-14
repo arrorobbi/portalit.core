@@ -2,10 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './config/typeorm.config'; // Import TypeORM config
+import { UsersModule } from './modules/user.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
+    UsersModule,
+    TypeOrmModule.forRoot(typeOrmConfig), // Use the imported config
     LoggerModule.forRoot({
       pinoHttp: {
         // Pino options here
@@ -24,4 +29,6 @@ import { LoggerModule } from 'nestjs-pino';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
