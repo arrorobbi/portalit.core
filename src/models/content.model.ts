@@ -7,18 +7,15 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class Content {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column()
-  email: string;
-
-  @Column()
-  password: string;
+  content: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -9,6 +9,9 @@ import { DataSource } from 'typeorm';
 import { UploadController } from './misc/multer';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ContentController } from './content/content.controller';
+import { ContentService } from './content/content.service';
+import { ContentModule } from './modules/content.module';
 
 @Module({
   imports: [
@@ -16,6 +19,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: join(__dirname, '..', '..', 'public'), // path to the public folder
     }),
     UsersModule,
+    ContentModule,
     TypeOrmModule.forRoot(typeOrmConfig), // Use the imported config
     LoggerModule.forRoot({
       pinoHttp: {
@@ -32,8 +36,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       },
     }),
   ],
-  controllers: [AppController, UploadController],
-  providers: [AppService],
+  controllers: [AppController, UploadController, ContentController],
+  providers: [AppService, ContentService],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

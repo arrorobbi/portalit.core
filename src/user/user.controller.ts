@@ -13,6 +13,7 @@ import {
 import { UsersService } from '../user/user.service';
 import { User } from '../models/user.model';
 import { NextFunction, Response, Request } from 'express';
+import { CreateUserDTO, IntUser } from 'src/validators/user.validator';
 
 @Controller('users')
 export class UserController {
@@ -40,12 +41,12 @@ export class UserController {
 
   @Post('register')
   async create(
-    @Body() UserDTO: User,
+    @Body() UserDTO: CreateUserDTO,
     @Res() res: Response,
     @Next() next: NextFunction,
   ) {
     try {
-      const result: User = await this.userService.create(UserDTO);
+      const result: IntUser = await this.userService.create(UserDTO);
       return res.status(HttpStatus.OK).json({
         status: HttpStatus.OK,
         message: 'Request Success',
