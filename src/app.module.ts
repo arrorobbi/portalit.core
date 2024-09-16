@@ -36,8 +36,8 @@ import { ContentModule } from './modules/content.module';
       },
     }),
   ],
-  controllers: [AppController, UploadController, ContentController],
-  providers: [AppService, ContentService],
+  controllers: [AppController, UploadController],
+  providers: [AppService],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

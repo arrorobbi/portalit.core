@@ -5,40 +5,30 @@ import {
   IsOptional,
   IsDate,
 } from 'class-validator';
-import { UUID } from 'crypto';
 // readonly is used fore immutanibility that couldn't modify after initialization
 
-export interface IntUser {
+export interface IntContent {
   // interface is validation for internal source, which mean will be validate data or response each method or functio
-  readonly id?: Number;
-  readonly name: String;
-  readonly email: String;
-  readonly password: String;
-  readonly createdAt?: Date;
-  readonly updatedAt?: Date;
+  readonly id?: string;
+  readonly title: string;
+  readonly content: string;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
 }
 
-export class CreateUserDTO {
+export class CreateContentDTO {
   // DTO is for validating request body
   @IsOptional()
   @IsInt()
-  readonly id: number;
+  readonly id: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  readonly content: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly password: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly confirmPassword: string;
+  readonly title: string;
 
   @IsOptional()
   @IsDate()

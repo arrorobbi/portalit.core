@@ -11,8 +11,6 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
   async create(payload: User): Promise<User> {
-    console.log(process.env.SALT_ROUND, 'SALTTTTTTTTTTT');
-
     const hashedPassword = await bcrypt.hash(
       payload.password,
       +process.env.SALT_ROUND,
