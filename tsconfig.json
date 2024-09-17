@@ -16,9 +16,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "types": ["node", "express", "multer"]
+    "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*", "public/**/*"],
+ "include": ["src/**/*", "src/public/**/*"],
   "exclude": ["node_modules"]
 }

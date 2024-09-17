@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './config/typeorm.config'; // Import TypeORM config
-import { UsersModule } from './modules/user.module';
 import { DataSource } from 'typeorm';
-import { UploadController } from './misc/multer';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ContentController } from './content/content.controller';
-import { ContentService } from './content/content.service';
-import { ContentModule } from './modules/content.module';
+import { AppController } from 'src/app.controller';
+import { AppService } from 'src/app.service';
+import { typeOrmConfig } from 'src/config/typeorm.config';
+import { UsersModule } from './user.module';
+
+import { ContentModule } from './content.module';
+import { UploadController } from 'src/upload/upload.controller';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'public'), // path to the public folder
+      rootPath: join(__dirname, '..', 'public'), // Adjusted to point to your public folder in the root
+      serveRoot: '/public', // Serve files under /public path
     }),
     UsersModule,
     ContentModule,

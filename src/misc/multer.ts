@@ -1,35 +1,22 @@
-import {
-  Controller,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { join } from 'path';
 
-@Controller('upload')
-export class UploadController {
-  @Post('image')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: '../public/uploads', // Save in public/uploads folder
-        filename: (req, file, callback) => {
-          // Generate a unique filename
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-        },
-      }),
-    }),
-  )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return {
-      message: 'File uploaded successfully!',
-      filename: file.filename,
-      path: `/uploads/${file.filename}`, // Path to access the file from frontend
-    };
-  }
-}
+export const multerConfig = {
+  storage: diskStorage({
+    destination: join(__dirname, '..', '..', 'public'), // Path to save images
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      cb(null, `${uniqueSuffix}-${file.originalname}`);
+    },
+  }),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5 MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type, only images are allowed!'), false);
+    }
+  },
+};
