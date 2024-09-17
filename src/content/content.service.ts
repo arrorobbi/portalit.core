@@ -1,5 +1,7 @@
+// content.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundError } from 'src/errors';
 import { Content } from 'src/models/content.model';
 import { Repository } from 'typeorm';
 
@@ -20,5 +22,17 @@ export class ContentService {
 
   async findOne(title: string): Promise<Content | null> {
     return await this.contentRepository.findOneBy({ title });
+  }
+
+  async findOneId(id: string): Promise<Content | null> {
+    console.log(`Finding content with id: ${id}`);
+    return await this.contentRepository.findOneBy({ id });
+  }
+
+  async delete(id: string): Promise<void> {
+    const result = await this.contentRepository.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundError(`Content with id ${id} not found`);
+    }
   }
 }
