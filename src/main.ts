@@ -13,7 +13,9 @@ async function bootstrap() {
   });
   // Enable CORS
   app.useStaticAssets(join(__dirname, '..', 'public')); // Serve static files from 'public'
-  app.enableCors();
+  app.enableCors({
+    origin: '*', // Allow all origins (not recommended for production)
+  });
 
   app.useGlobalPipes(new ValidationPipe()); // validation DTO and interface
   app.useGlobalFilters(new AllExceptionsFilter()); // error middleware
