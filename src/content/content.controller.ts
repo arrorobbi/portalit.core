@@ -4,6 +4,7 @@ import { ContentService } from './content.service';
 import { Controller, Get, Param, Post, Body, Delete, Res, Next, HttpStatus, Req } from '@nestjs/common';
 import { NextFunction, Response } from 'express';
 import { Content } from 'src/models/content.model';
+import { NotFoundError } from 'src/errors';
 
 @Controller('content')
 export class ContentController {
@@ -98,17 +99,19 @@ export class ContentController {
     }
   }
 
-  @Delete(':id')
+  @Delete('delid/:id')
   async delete(
     @Param('id') id: string,
     @Res() res: Response,
     @Next() next: NextFunction,
   ) {
     try {
-      await this.contentService.delete(id);
+      const findData: Content = await this.contentService.findOneId(id)             
+      if(findData === null) throw new NotFoundError("Data Not Found")
+      await this.contentService.delete(findData.id);
       return res.status(HttpStatus.NO_CONTENT).json({
         status: HttpStatus.NO_CONTENT,
-        message: 'Content deleted successfully',
+        message: 'Content deleted successfully'
       });
     } catch (error) {
       next(error);
