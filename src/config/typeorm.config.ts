@@ -12,7 +12,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.PG_DB_NAME || 'your_database',
   entities: [__dirname + '/../**/*.model{.ts,.js}'],
   synchronize: true, // Use DB_SYNC to toggle sync
-  // dropSchema: true, // Drop all tables before syncing
   // Enable SSL
   // ssl: {
   //   rejectUnauthorized: false, // Set to true if you want to validate the certificate
@@ -22,4 +21,4 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   // Optional: Specify which logs you want to see
   logger: 'advanced-console', // You can also use 'simple-console', 'file', or 'debug
 };
-console.log(typeOrmConfig);
+  // dropSchema: true, // Drop all tables before syncing

@@ -17,7 +17,11 @@ export class ContentService {
   }
 
   async findAll(): Promise<[Content[], number]> {
-    return await this.contentRepository.findAndCount();
+    return await this.contentRepository.findAndCount({
+      order: {
+        title: 'ASC',
+      },
+    });
   }
 
   async findOne(title: string): Promise<Content | null> {
@@ -25,7 +29,6 @@ export class ContentService {
   }
 
   async findOneId(id: string): Promise<Content | null> {
-    console.log(`Finding content with id: ${id}`);
     return await this.contentRepository.findOneBy({ id });
   }
 

@@ -23,7 +23,6 @@ export class UserController {
   async findAll(@Res() res: Response, @Next() next: NextFunction) {
     try {
       const result: [User[], number] = await this.userService.findAll();
-      console.log(result);
 
       return res.status(HttpStatus.OK).json({
         status: HttpStatus.OK,
