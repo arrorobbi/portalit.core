@@ -17,9 +17,9 @@ export class AuthController {
     @Next() next: NextFunction,
   ) {
     try {
-      const { email, password } = LoginDTO;
+      const { username, password } = LoginDTO;
 
-      const foundUser = await this.userService.findOne(email);
+      const foundUser = await this.userService.findOne(username);
 
       if (foundUser) {
         // bcrypt comparing with database
@@ -27,20 +27,23 @@ export class AuthController {
           password,
           foundUser.password,
         );
-
+        
         const payload = {
           id: foundUser.id,
           email: foundUser.email,
+          username: foundUser.username,
         };
         // sign jwt for response
-        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-          expiresIn: '24h',
-        });
-
-        return res.status(HttpStatus.CREATED).json({
-          status: HttpStatus.CREATED,
-          token: token,
-        });
+        if(isValidPassword)
+        {
+          const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+            expiresIn: '24h',
+          });
+          return res.status(HttpStatus.CREATED).json({
+            status: HttpStatus.CREATED,
+            token: token,
+          });
+        }
       } else {
         throw new BadRequestError('Wrong email or password');
       }

@@ -26,8 +26,8 @@ export class UsersService {
     return await this.usersRepository.findAndCount();
   }
 
-  async findOne(email: string): Promise<User | null> {
-    return await this.usersRepository.findOneBy({ email });
+  async findOne(username: string): Promise<User | null> {
+    return await this.usersRepository.findOneBy({ username });
   }
 
   async findByname(name: string): Promise<User[]> {

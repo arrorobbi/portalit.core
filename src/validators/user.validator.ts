@@ -11,6 +11,7 @@ import { UUID } from 'crypto';
 export interface IntUser {
   // interface is validation for internal source, which mean will be validate data or response each method or functio
   readonly id?: Number;
+  readonly username: String;
   readonly name: String;
   readonly email: String;
   readonly password: String;
@@ -23,6 +24,10 @@ export class CreateUserDTO {
   @IsOptional()
   @IsInt()
   readonly id: number;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly username: string;
 
   @IsNotEmpty()
   @IsString()
